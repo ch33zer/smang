@@ -14,10 +14,20 @@ if (Meteor.isClient) {
 		return Links.findOne(this._id).y;	
 	}
 	Template.input.events = {
-		'click input.add': function() {
+		'click input.add': function(event) {
 			Links.insert({urltext: document.getElementById('entry').value, x: 0, y: 0});
 		}
-	}
+	};
+	Template.link.events = {
+		'mousedown .draggable': function(event) {
+			Session.set("interiorPos",event.currentTarget.	
+		},
+		'mouseup .draggable': function(event) {
+			
+			
+		}
+
+	};
 }
 
 if (Meteor.isServer) {
