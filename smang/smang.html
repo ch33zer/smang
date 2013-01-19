@@ -54,7 +54,7 @@
 </template>
 
 <template name="scplayer">
-	<div class="draggable=" style="position:absolute; left: {{dragx}}px; top: {{dragy}}px;">
+	<div class="draggable=" id="{{id}}" style="position:absolute; left: {{dragx}}px; top: {{dragy}}px;">
 		<script>
 			SC.oEmbed({{dragtext}}, {auto_play: true}, function(oEmbed){});
 		</script>
@@ -62,7 +62,7 @@
 </template>
 
 <template name="link">
-	<div class="draggable" style="position: absolute; left: {{dragx}}px; top: {{dragy}}px;">
+	<div class="draggable" id="{{id}}" style="position: absolute; left: {{dragx}}px; top: {{dragy}}px;">
 		<a href="{{dragtext}}" target="_blank">{{dragtext}}</a>
 	</div>
 </template>

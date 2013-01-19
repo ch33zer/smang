@@ -25,15 +25,18 @@ if (Meteor.isClient) {
 	Template.link.dragy = function() {
 		return Links.findOne(this._id).y;	
 	}
+	Template.link.id = function() {
+		return this._id;
+	}
 	Template.link.rendered = function() {
 		var tid = this.data._id;
-		$(".draggable").draggable({drag: function (event, ui) {
-			var update = {$set: {x:ui.offset.left, y:ui.offset.top}};
+		$("#"+tid).draggable({drag: function (event, ui) {
+			var update = {$set: {x:ui.position.left, y:ui.position.top}};
 			Links.update(tid, update,{multi:true}, function(err) {
 				err;//debug	
 			});
 		}, stop: function(event, ui) {
-			var update = {$set: {x:ui.offset.left, y:ui.offset.top}};
+			var update = {$set: {x:ui.position.left, y:ui.position.top}};
 			Links.update(tid, update, {multi:true}, function(err){err;});
 		}, containment:"parent", refreshPositions:true});
 	}
