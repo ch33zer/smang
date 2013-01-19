@@ -1,6 +1,11 @@
 Links = new Meteor.Collection("links");
 
 if (Meteor.isClient) {
+	Template.input.events = {
+		"click input.add": function(event) {
+			Links.insert({urltext: document.getElementById("entry").value, x: 0, y: 0});
+		}
+	}
 	Template.link.dragtext = function() {
 		return Links.findOne(this._id).urltext;	
 	}
@@ -13,31 +18,14 @@ if (Meteor.isClient) {
 	Template.link.dragy = function() {
 		return Links.findOne(this._id).y;	
 	}
-	Template.input.events = {
-		'click input.add': function(event) {
-			Links.insert({urltext: document.getElementById('entry').value, x: 0, y: 0});
-		}
-	};
-	Template.link.events = {
-		'mousedown .draggable': function(event) {
-			Session.set("dragging", $(event.target));
-		},
-		'mouseup .draggable': function(event) {
-			Session.set("dragging", null);
-		}
-
-	};
-
-	$(document.body).on("mousemove",function(e) {
-		if (Session.get("dragging")) {
-			Session.get("dragging").offset({
-			top:e.pageY,
-			left:e.pageX	
+	Template.link.rendered = function() {
+		$(".draggable").draggable({drag: function (event, ui) {
+			var update = {$set: {x:ui.offset.left, y:ui.offset.top}};
+			Links.update(this._id, update,{multi:true}, function(err) {
+				err;//debug	
 			});
-		}
-	});
-	
-	Session.set("dragging", null);
+		},containment:"parent"});
+	}
 }
 
 if (Meteor.isServer) {
