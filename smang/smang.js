@@ -19,18 +19,25 @@ if (Meteor.isClient) {
 		return Links.find(/*{},{sort: {urltext:1, x: -1, y: -1}}*/);
 	}
 	Template.link.dragx = function() {
-		return Links.findOne(this._id).x;	
+		var retval = Links.findOne(this._id);
+		alert(retval.urltext + " " + retval.x + " " + retval.y);
+		return retval.x;	
 	}
 	Template.link.dragy = function() {
 		return Links.findOne(this._id).y;	
 	}
 	Template.link.rendered = function() {
+		var tid = this._id;
 		$(".draggable").draggable({drag: function (event, ui) {
 			var update = {$set: {x:ui.offset.left, y:ui.offset.top}};
-			Links.update(this._id, update,{multi:true}, function(err) {
+			Links.update(tid, update,{multi:true}, function(err) {
 				err;//debug	
 			});
-		},containment:"parent"});
+		}, stop: function(event, ui) {
+			var update = {$set: {x:ui.offset.left, y:ui.offset.top}};
+			alert(tid + " " + ui.offset.left + " " + ui.offset.top);
+			Links.update(tid, update, {multi:true}, function(err){err;});
+		}, containment:"parent", refreshPositions:true});
 	}
 }
 
