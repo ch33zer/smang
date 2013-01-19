@@ -4,40 +4,36 @@ body {
 	font-family: arial;
 }	
 
-input {
-	width: auto;
-}
-
 a {
 	text-decoration: none;
 }
 
 #insertbox  {
-	float: left;
 	background-color: #ccc;
 	border-radius: 20px;
 	margin-left: 5px;
-	padding-left: 8px;
-	padding-top: 8px;
-	width: 15%;
-	height: 625px;
+	padding: 8px;
+	width: 95%;
+	height: 10%;
 }
 
 #main {
-	float: right;
+	margin: 4px;
 	overflow: auto;
-	right: 0px;
 	position: absolute;
 	border: 1px solid #ccc;
 	border-radius: 20px;
-	width: 80%;
+	width: 95%;
 	height: 650px;
-	margin-left: 25px;
 }
 
 #entry {
-	width: 90%;
+	width: 80%;
 	padding: 2px;
+}
+
+.add {
+	float: right;
 }
 
 .draggable { 

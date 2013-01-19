@@ -3,27 +3,38 @@ Links = new Meteor.Collection("links");
 if (Meteor.isClient) {
 	Template.input.events = {
 		"click input.add": function(event) {
-			Links.insert({urltext: document.getElementById("entry").value, x: 0, y: 0});
+			Links.insert({urltext: document.getElementById("entry").value, owner: Meteor.userId(),x: 0, y: 0});
 		}
 	}
 	
 	Template.link.soundcloud = function() {
 		var re = new RegExp("^http://([a-z0-9]*.)?soundcloud.com/([a-z0-9]/)*");
-		return re.test(document.getElementById("entry"));
+		return re.test(this.urltext);
 	}
 	
 	Template.link.dragtext = function() {
-		return Links.findOne(this._id).urltext;	
+		return this.urltext;	
+	}
+	Template.link.sc_embed = function() {
+		var target = "sc_"+this._id;
+		ret = SC.oEmbed(this.urltext, {auto_play: true}, function(oEmbed) {document.getElementById(target).appendChild(oEmbed.html);});
+		return null;
 	}
 	Template.display.links = function() {
-		return Links.find(/*{},{sort: {urltext:1, x: -1, y: -1}}*/);
+		return Links.find();
+	}
+	Template.link.user = function() {
+		var user = Meteor.users.findOne(this.owner);
+		if (user != null) {
+			return user.emails.address;
+		}
+		return "Anonymous";
 	}
 	Template.link.dragx = function() {
-		var retval = Links.findOne(this._id);
-		return retval.x;	
+		return this.x;	
 	}
 	Template.link.dragy = function() {
-		return Links.findOne(this._id).y;	
+		return this.y;	
 	}
 	Template.link.id = function() {
 		return this._id;
@@ -39,6 +50,8 @@ if (Meteor.isClient) {
 			var update = {$set: {x:ui.position.left, y:ui.position.top}};
 			Links.update(tid, update, {multi:true}, function(err){err;});
 		}, containment:"parent", refreshPositions:true});
+		var target = "sc_"+tid;
+		SC.oEmbed(this.data.urltext, {auto_play: true}, function(oEmbed) {document.getElementById(target).innerHTML = oEmbed.html;});
 	}
 }
 
@@ -48,7 +61,7 @@ if (Meteor.isServer) {
       var urls = ["http://jhu.edu",
                    "http://youtube.com"];
       for (var i = 0; i < urls.length; i++)
-        Links.insert({urltext: urls[i], x: Math.floor(Math.random()*10)*5, y: Math.floor(Math.random()*10)*5});
+        Links.insert({urltext: urls[i], owner: null,x: Math.floor(Math.random()*10)*5, y: Math.floor(Math.random()*10)*5});
 
 	}
 

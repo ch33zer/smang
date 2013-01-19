@@ -20,13 +20,12 @@
 	<script src="http://connect.soundcloud.com/sdk.js"></script>
 	<script src="smang.js"></script>
 	<script type="text/javascript">
-		SC.initialize({client_id: 'smang'});
+		SC.initialize({client_id: "3d1d5a4094779d1981143b9fbf190de5"});
 	</script>
 	<link type="text/css" href="smang.css" rel="stylesheet"></link>
 	</head>
 <body>
 	<div style="width: 100%; float: right">
-		{{loginButtons}}
 	</div>
 	{{> input}}
 	<div id="main">
@@ -37,7 +36,8 @@
 
 <template name="input">
 	<div id="insertbox">
-		<input type="text" id="entry"/><br/>
+		{{loginButtons}}
+		<input type="text" id="entry"/>
 		<input type="button" class="add" value="Smang it"/>
 	</div>
 </template>
@@ -45,24 +45,25 @@
 
 <template name="display">
 	{{#each links}}
-		{{#if soundcloud}}
-			<span>{{> scplayer}}</span>
-		{{/if}}
 		{{> link}}
 	{{/each}}
 
 </template>
 
-<template name="scplayer">
-	<div class="draggable=" id="{{id}}" style="position:absolute; left: {{dragx}}px; top: {{dragy}}px;">
-		<script>
-			SC.oEmbed({{dragtext}}, {auto_play: true}, function(oEmbed){});
-		</script>
-	</div>
-</template>
-
 <template name="link">
 	<div class="draggable" id="{{id}}" style="position: absolute; left: {{dragx}}px; top: {{dragy}}px;">
+		{{#if soundcloud}}
+			<div id="sc_{{id}}">
+<!--
+				<script type="text/javascript">
+				var h = SC.oEmbed(str, {auto_play: true}, function(oEmbed){}).html;
+				document.getElementById("sc_{{id}}").appendChild(h);
+				</script>
+-->
+			</div>
+		{{else}}
 		<a href="{{dragtext}}" target="_blank">{{dragtext}}</a>
+		<p> Owner: {{user}}</p>
+		{{/if}}
 	</div>
 </template>
