@@ -15,11 +15,6 @@ if (Meteor.isClient) {
 	Template.link.dragtext = function() {
 		return this.urltext;	
 	}
-	Template.link.sc_embed = function() {
-		var target = "sc_"+this._id;
-		ret = SC.oEmbed(this.urltext, {auto_play: true}, function(oEmbed) {document.getElementById(target).appendChild(oEmbed.html);});
-		return null;
-	}
 	Template.display.links = function() {
 		return Links.find();
 	}
@@ -50,8 +45,11 @@ if (Meteor.isClient) {
 			var update = {$set: {x:ui.position.left, y:ui.position.top}};
 			Links.update(tid, update, {multi:true}, function(err){err;});
 		}, containment:"parent", refreshPositions:true});
+	}
+	Template.sclink.created = function() {
+		var tid = this.data._id;
 		var target = "sc_"+tid;
-		SC.oEmbed(this.data.urltext, {auto_play: true}, function(oEmbed) {document.getElementById(target).innerHTML = oEmbed.html;});
+		SC.oEmbed(this.data.urltext, {auto_play: false}, function(oEmbed) {document.getElementById(target).innerHTML = oEmbed.html;});
 	}
 }
 

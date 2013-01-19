@@ -54,6 +54,7 @@
 	<div class="draggable" id="{{id}}" style="position: absolute; left: {{dragx}}px; top: {{dragy}}px;">
 		{{#if soundcloud}}
 			<div id="sc_{{id}}">
+				{{> sclink}}
 <!--
 				<script type="text/javascript">
 				var h = SC.oEmbed(str, {auto_play: true}, function(oEmbed){}).html;
@@ -63,7 +64,11 @@
 			</div>
 		{{else}}
 		<a href="{{dragtext}}" target="_blank">{{dragtext}}</a>
-		<p> Owner: {{user}}</p>
+		<span class="owner"> Owner: {{user}}</span>
 		{{/if}}
 	</div>
+</template>
+
+<template name="sclink">
+
 </template>
