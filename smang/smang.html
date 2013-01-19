@@ -17,7 +17,11 @@
 <head>
 	<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+	<script src="http://connect.soundcloud.com/sdk.js"></script>
 	<script src="smang.js"></script>
+	<script type="text/javascript">
+		SC.initialize({client_id: 'smang'});
+	</script>
 	<link type="text/css" href="smang.css" rel="stylesheet"></link>
 	</head>
 <body>
@@ -41,13 +45,24 @@
 
 <template name="display">
 	{{#each links}}
+		{{#if soundcloud}}
+			<span>{{> scplayer}}</span>
+		{{/if}}
 		{{> link}}
 	{{/each}}
 
 </template>
 
+<template name="scplayer">
+	<div class="draggable=" style="position:absolute; left: {{dragx}}px; top: {{dragy}}px;">
+		<script>
+			SC.oEmbed({{dragtext}}, {auto_play: true}, function(oEmbed){});
+		</script>
+	</div>
+</template>
+
 <template name="link">
 	<div class="draggable" style="position: absolute; left: {{dragx}}px; top: {{dragy}}px;">
-		<a href="{{dragtext}}">{{dragtext}}</a>
+		<a href="{{dragtext}}" target="_blank">{{dragtext}}</a>
 	</div>
 </template>

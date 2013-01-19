@@ -1,5 +1,9 @@
 /* CSS declarations go here */
 
+body {
+	font-family: arial;
+}	
+
 input {
 	width: auto;
 }
@@ -16,7 +20,7 @@ a {
 	padding-left: 8px;
 	padding-top: 8px;
 	width: 15%;
-	height: 95%;
+	height: 625px;
 }
 
 #main {
@@ -26,9 +30,16 @@ a {
 	position: absolute;
 	border: 1px solid #ccc;
 	border-radius: 20px;
-	width: 83%;
-	height: 97%;
+	width: 80%;
+	height: 650px;
+	margin-left: 25px;
 }
+
+#entry {
+	width: 90%;
+	padding: 2px;
+}
+
 .draggable { 
 	border: 1px solid #bbb;
 	width: intrinsic;

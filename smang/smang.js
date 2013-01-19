@@ -6,6 +6,12 @@ if (Meteor.isClient) {
 			Links.insert({urltext: document.getElementById("entry").value, x: 0, y: 0});
 		}
 	}
+	
+	Template.link.soundcloud = function() {
+		var re = new RegExp("^http://([a-z0-9]*.)?soundcloud.com/([a-z0-9]/)*");
+		return re.test(document.getElementById("entry"));
+	}
+	
 	Template.link.dragtext = function() {
 		return Links.findOne(this._id).urltext;	
 	}
