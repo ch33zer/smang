@@ -20,7 +20,6 @@ if (Meteor.isClient) {
 	};
 	Template.link.events = {
 		'mousedown .draggable': function(event) {
-			Session.set("interiorPos",event.currentTarget.	
 		},
 		'mouseup .draggable': function(event) {
 			
@@ -28,6 +27,10 @@ if (Meteor.isClient) {
 		}
 
 	};
+	$(function() {
+		$(".draggable").draggable({containment:parent});
+	}
+	);
 }
 
 if (Meteor.isServer) {
@@ -39,6 +42,7 @@ if (Meteor.isServer) {
         Links.insert({urltext: urls[i], x: Math.floor(Math.random()*10)*5, y: Math.floor(Math.random()*10)*5});
 
 	}
+
    }); 
 }
 /*
