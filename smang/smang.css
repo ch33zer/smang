@@ -1,5 +1,9 @@
 /* CSS declarations go here */
 
+input {
+	width: auto;
+}
+
 a {
 	text-decoration: none;
 }

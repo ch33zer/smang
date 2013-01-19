@@ -17,17 +17,29 @@
 <head>
 	<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
-	<script src="drag.js"></script>
-	<link type="text/css" href="drag.css" rel="stylesheet"></link>
+	<script src="smang.js"></script>
+	<link type="text/css" href="smang.css" rel="stylesheet"></link>
 	</head>
 <body>
 	<div id="insertbox">
-		<form name="insertf" id="insertf">
-			<input type="text" id="entry" name="entry"/><br/>
-			<input type="button" value="Smang" onclick="javascript:addDraggable(document.getElementById('main'),new Dragbox(document.insertf.entry.value))"/>
-		</form>
+		<input type="text" name="entry"/><br/>
+		<input type="button" name="add" value="Smang it"/>
+
 	</div>
 	<div id="main">
 	<span id="empty"></span> <!--it is trolling-->
+	{{> display}}
 	</div>
 </body>
+
+<template name="display">
+	{{#each links}}
+		{{> link}}
+	{{/each}}
+</template>
+
+<template name="link">
+	<div class="draggable">
+		<a href="{{dragtext}}">{{dragtext}}</a>
+	</div>
+</template>
