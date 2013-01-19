@@ -20,17 +20,24 @@ if (Meteor.isClient) {
 	};
 	Template.link.events = {
 		'mousedown .draggable': function(event) {
+			Session.set("dragging", $(event.target));
 		},
 		'mouseup .draggable': function(event) {
-			
-			
+			Session.set("dragging", null);
 		}
 
 	};
-	$(function() {
-		$(".draggable").draggable({containment:parent});
-	}
-	);
+
+	$(document.body).on("mousemove",function(e) {
+		if (Session.get("dragging")) {
+			Session.get("dragging").offset({
+			top:e.pageY,
+			left:e.pageX	
+			});
+		}
+	});
+	
+	Session.set("dragging", null);
 }
 
 if (Meteor.isServer) {
