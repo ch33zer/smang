@@ -21,16 +21,20 @@
 	<link type="text/css" href="smang.css" rel="stylesheet"></link>
 	</head>
 <body>
-	<div id="insertbox">
-		<input type="text" name="entry"/><br/>
-		<input type="button" name="add" value="Smang it"/>
-
-	</div>
+	{{> input}}
 	<div id="main">
 	<span id="empty"></span> <!--it is trolling-->
 	{{> display}}
 	</div>
 </body>
+
+<template name="input">
+	<div id="insertbox">
+		<input type="text" id="entry"/><br/>
+		<input type="button" class="add" value="Smang it"/>
+	</div>
+</template>
+
 
 <template name="display">
 	{{#each links}}
@@ -39,7 +43,7 @@
 </template>
 
 <template name="link">
-	<div class="draggable">
+	<div class="draggable" style=" absolute; left: {{dragx}}px; top: {{dragy}}px;">
 		<a href="{{dragtext}}">{{dragtext}}</a>
 	</div>
 </template>

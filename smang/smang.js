@@ -5,7 +5,18 @@ if (Meteor.isClient) {
 		return Links.findOne(this._id).urltext;	
 	}
 	Template.display.links = function() {
-		return Links.find({},{sort: {urltext:1, x: -1, y: -1}});
+		return Links.find(/*{},{sort: {urltext:1, x: -1, y: -1}}*/);
+	}
+	Template.link.dragx = function() {
+		return Links.findOne(this._id).x;	
+	}
+	Template.link.dragy = function() {
+		return Links.findOne(this._id).y;	
+	}
+	Template.input.events = {
+		'click input.add': function() {
+			Links.insert({urltext: document.getElementById('entry').value, x: 0, y: 0});
+		}
 	}
 }
 
@@ -16,10 +27,9 @@ if (Meteor.isServer) {
                    "http://youtube.com"];
       for (var i = 0; i < urls.length; i++)
         Links.insert({urltext: urls[i], x: Math.floor(Math.random()*10)*5, y: Math.floor(Math.random()*10)*5});
-    
 
 	}
-  });
+   }); 
 }
 /*
 // Set up a collection to contain player information. On the server,

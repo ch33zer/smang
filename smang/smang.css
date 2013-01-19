@@ -21,7 +21,7 @@ a {
 
 #main {
 	overflow: auto;
-	float: right;
+	right: 0px;
 	border: 1px solid #ccc;
 	border-radius: 20px;
 	width: 83%;
@@ -29,7 +29,6 @@ a {
 }
 .draggable { 
 	border: 1px solid #bbb;
-	position: relative;
 	width: intrinsic;
 	width: -moz-max-content;
 	height: auto; 
