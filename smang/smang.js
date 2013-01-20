@@ -17,6 +17,10 @@ if (Meteor.isClient) {
 		var re = new RegExp("^http://([a-z0-9]*.)?soundcloud.com/([a-z0-9]/)*");
 		return re.test(this.urltext);
 	}
+	Template.link.youtube = function() {
+		var re = new RegExp("^https?://(www.)?youtube.com/[a-z0-9.?&=]*");
+		return re.test(this.urltext);
+	}
 	
 	Template.link.dragtext = function() {
 		return this.urltext;	
@@ -56,6 +60,19 @@ if (Meteor.isClient) {
 		var tid = this.data._id;
 		var target = "sc_"+tid;
 		SC.oEmbed(this.data.urltext, {auto_play: false}, function(oEmbed) {document.getElementById(target).innerHTML = oEmbed.html;});
+	}
+	Template.ytlink.rendered = function() {
+		var tid = this.data._id;
+		var target = "yt_"+tid;
+
+		var video_id = this.data.urltext.split('v=')[1];
+		var ampersandPosition = video_id.indexOf('&');
+		if(ampersandPosition != -1) {
+		  video_id = video_id.substring(0, ampersandPosition);
+		}
+
+		var uri = "<iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/" + video_id + "\" frameborder=\"0\"></iframe>";
+		document.getElementById(target).innerHTML = uri;
 	}
 }
 
