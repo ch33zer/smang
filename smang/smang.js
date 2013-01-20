@@ -3,7 +3,13 @@ Links = new Meteor.Collection("links");
 if (Meteor.isClient) {
 	Template.input.events = {
 		"click input.add": function(event) {
-			Links.insert({urltext: document.getElementById("entry").value, owner: Meteor.userId(),x: 0, y: 0});
+			Links.insert({urltext: document.getElementById("entry").value, owner: Meteor.call('plainUserId'),x: 0, y: 0});
+		}
+	}
+
+	Template.link.events = {
+		"click .delete": function(event) {
+			Links.remove(this._id)
 		}
 	}
 	
@@ -21,7 +27,7 @@ if (Meteor.isClient) {
 	Template.link.user = function() {
 		var user = Meteor.users.findOne(this.owner);
 		if (user != null) {
-			return user.emails.address;
+			return user.emails[0].address;
 		}
 		return "Anonymous";
 	}
@@ -54,6 +60,11 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+  Meteor.methods({
+	plainUserId: function() {
+		return this.userId;
+	}
+  });
   Meteor.startup(function () {
     if (Links.find().count() === 0) {
       var urls = ["http://jhu.edu",

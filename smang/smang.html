@@ -52,6 +52,9 @@
 
 <template name="link">
 	<div class="draggable" id="{{id}}" style="position: absolute; left: {{dragx}}px; top: {{dragy}}px;">
+		<div class="delete">
+			<span style="cursor: default">x</span>
+		</div>
 		{{#if soundcloud}}
 			<div id="sc_{{id}}">
 				{{> sclink}}
@@ -64,7 +67,7 @@
 			</div>
 		{{else}}
 		<a href="{{dragtext}}" target="_blank">{{dragtext}}</a>
-		<span class="owner"> Owner: {{user}}</span>
+	<!--	<span class="owner"> Owner: {{user}}</span> -->
 		{{/if}}
 	</div>
 </template>
