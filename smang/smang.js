@@ -1,4 +1,5 @@
 Links = new Meteor.Collection("links");
+Chats = new Meteor.Collection("chats");
 
 if (Meteor.isClient) {
 	Template.input.events = {
@@ -6,7 +7,21 @@ if (Meteor.isClient) {
 			Links.insert({urltext: document.getElementById("entry").value, owner: Meteor.call('plainUserId'),x: 0, y: 0});
 		}
 	}
-
+	Template.chat.events = {
+		"click input.speak": function(event) {
+			var ownerName = new String(Meteor.user().emails[0].address);
+			Chats.insert({message: document.getElementById("chatentry").value, owner: ownerName});
+		}
+	}
+	Template.chat.chats = function() {
+		return Chats.find();
+	}
+	Template.chatmessage.owner = function() {
+		return this.owner;
+	}
+	Template.chatmessage.message = function() {
+		return this.message;
+	}
 	Template.link.events = {
 		"click .delete": function(event) {
 			Links.remove(this._id)
@@ -41,9 +56,9 @@ if (Meteor.isClient) {
 		return Links.find();
 	}
 	Template.link.user = function() {
-		var user = Meteor.users.findOne(this.owner);
+		var user = Meteor.user();
 		if (user != null) {
-			return user.emails[0].address;
+			return new String(user.emails[0].address);
 		}
 		return "Anonymous";
 	}
@@ -66,7 +81,7 @@ if (Meteor.isClient) {
 		}, stop: function(event, ui) {
 			var update = {$set: {x:ui.position.left, y:ui.position.top}};
 			Links.update(tid, update, {multi:true}, function(err){err;});
-		}, containment:"parent", refreshPositions:true});
+		}, containment:"parent", refreshPositions: true});
 	}
 	Template.sclink.created = function() {
 		var tid = this.data._id;

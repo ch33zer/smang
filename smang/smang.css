@@ -26,10 +26,21 @@ a {
 	background-color: #fff;
 	margin: 4px;
 	overflow: auto;
-	position: absolute;
 	border: 1px solid #aaa;
 	border-radius: 4px;
-	width: 95%;
+	width: 75%;
+	height: 650px;
+}
+
+#chat {
+	position: absolute;
+	top:9%;
+	overflow: auto;
+	border: 1px solid #aaa;
+	background-color: #fff;
+	border-radius: 4px;
+	width: 20%;
+	right: 2%;
 	height: 650px;
 }
 
@@ -64,6 +75,10 @@ a {
 	font-size: 8px;
 	text-align: center;
 	border-radius: 10px;
+}
+
+.messageview {
+	margin: 2px;
 }
 
 .owner {
