@@ -42,10 +42,11 @@
 </template>
 
 <template name="display">
+	{{#constant}}
 	{{#each links}}
 		{{> link}}
 	{{/each}}
-
+	{{/constant}}
 </template>
 
 <template name="link">
