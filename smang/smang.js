@@ -55,6 +55,17 @@ if (Meteor.isClient) {
 		var re = new RegExp(".+\\.(jpg|png|gif|bmp)$","i");
 		return re.test(this.urltext);
 	}	
+	Template.link.dragtexthtml = function() {
+		if (this.urltext.indexOf("http")==0) {
+			return this.urltext;
+		}
+		return "http://" + this.urltext;
+	}
+	Template.link.islink = function() {
+		var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+ 		var regex = new RegExp(expression);
+		return regex.test(this.urltext);
+	}
 	Template.link.dragtext = function() {
 		return this.urltext;	
 	}

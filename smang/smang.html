@@ -79,8 +79,12 @@
 						{{#if image}}
 							<img src={{dragtext}} />
 							{{else}}
-							<a href="{{dragtext}}" target="_blank">{{dragtext}}</a>
+							{{#if islink}}
+							<a href="{{dragtexthtml}}" target="_blank">{{dragtext}}</a>
 							<!--	<span class="owner"> Owner: {{user}}</span>	-->
+							{{else}}
+							<p>{{dragtext}}</p>
+							{{/if}}
 						{{/if}}
 					{{/if}}
 				{{/if}}
