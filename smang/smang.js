@@ -57,7 +57,7 @@ if (Meteor.isClient) {
 	}
 	Template.link.user = function() {
 		var user = Meteor.user();
-		if (user != null) {
+		if (user != null && user.emails) {
 			return new String(user.emails[0].address);
 		}
 		return "Anonymous";
@@ -78,9 +78,6 @@ if (Meteor.isClient) {
 			Links.update(tid, update,{multi:true}, function(err) {
 				err;//debug	
 			});
-		}, stop: function(event, ui) {
-			var update = {$set: {x:ui.position.left, y:ui.position.top}};
-			Links.update(tid, update, {multi:true}, function(err){err;});
 		}, containment:"parent", refreshPositions: true});
 	}
 	Template.sclink.created = function() {

@@ -38,7 +38,7 @@
 </template>
 
 <template name="chatmessage">
-	<span class="messageview">{{owner}}: {{message}}</span><br/>	
+	<span class="messageview"><span style="font-weight:bold; color: blue;">{{owner}}</span>: {{message}}</span><br/>	
 </template>
 
 <template name="display">
@@ -50,6 +50,7 @@
 
 <template name="link">
 	<div class="draggable" id="{{id}}" style="position: absolute; left: {{dragx}}px; top: {{dragy}}px;">
+	{{#constant}}
 		<div class="delete">
 			<span style="cursor: default">x</span>
 		</div>
@@ -83,6 +84,7 @@
 				{{/if}}
 			{{/if}}
 		{{/if}}
+	{{/constant}}
 	</div>
 </template>
 

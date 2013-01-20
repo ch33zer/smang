@@ -23,7 +23,7 @@ a {
 #main {
 	position:absolute;
 	top:8%;
-	background-color: #fff;
+	background-color: #eee;
 	margin: 4px;
 	overflow: auto;
 	border: 1px solid #aaa;
@@ -37,7 +37,7 @@ a {
 	top:9%;
 	overflow: auto;
 	border: 1px solid #aaa;
-	background-color: #fff;
+	background-color: #eee;
 	border-radius: 4px;
 	width: 20%;
 	right: 2%;
