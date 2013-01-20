@@ -3,14 +3,20 @@ Chats = new Meteor.Collection("chats");
 
 if (Meteor.isClient) {
 	Template.input.events = {
-		"click input.add": function(event) {
-			Links.insert({urltext: document.getElementById("entry").value, owner: Meteor.call('plainUserId'),x: 0, y: 0});
+		"click input.add, keydown": function(event) {
+			if (event.type == 'click' || (event.type == 'keydown' && (event.which == 10 || event.which == 13))) {
+				Links.insert({urltext: document.getElementById("entry").value, owner: Meteor.call('plainUserId'),x: 0, y: 0});
+				document.getElementById("entry").value = "";
+			}
 		}
 	}
 	Template.chat.events = {
-		"click input.speak": function(event) {
-			var ownerName = new String(Meteor.user().emails[0].address);
-			Chats.insert({message: document.getElementById("chatentry").value, owner: ownerName});
+		"click input.speak, keydown": function(event) {
+			if (event.type == 'click' || (event.type == 'keydown' && (event.which == 10 || event.which == 13))) {
+				var ownerName = new String(Meteor.user().emails[0].address);
+				Chats.insert({message: document.getElementById("chatentry").value, owner: ownerName});
+				document.getElementById("chatentry").value = "";
+			}
 		}
 	}
 	Template.chat.chats = function() {
@@ -29,7 +35,7 @@ if (Meteor.isClient) {
 	}
 	
 	Template.link.soundcloud = function() {
-		var re = new RegExp("^http://([a-z0-9]*.)?soundcloud.com/([a-z0-9]/)*");
+		var re = new RegExp("^https?://([a-z0-9]*.)?soundcloud.com/([a-z0-9]/)*");
 		return re.test(this.urltext);
 	}
 	Template.link.youtube = function() {

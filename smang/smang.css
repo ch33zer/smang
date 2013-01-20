@@ -10,6 +10,12 @@ a {
 	text-decoration: none;
 }
 
+img {
+	max-width: 500px;
+	max-height: 500px;
+	overflow: auto;
+}
+
 #insertbox  {
 	position:absolute;
 	top:0px;
@@ -23,7 +29,6 @@ a {
 #main {
 	position:absolute;
 	top:8%;
-	background-color: #eee;
 	margin: 4px;
 	overflow: auto;
 	border: 1px solid #aaa;
@@ -31,6 +36,13 @@ a {
 	width: 75%;
 	height: 650px;
 }
+
+#main:before {
+	content: url("http://lorempixel.com/1000/1000");
+	opacity:0.5;
+	background: url("http://lorempixel.com/1000/1000");
+}
+
 
 #chat {
 	position: absolute;
