@@ -21,7 +21,19 @@ if (Meteor.isClient) {
 		var re = new RegExp("^https?://(www.)?youtube.com/[a-z0-9.?&=]*");
 		return re.test(this.urltext);
 	}
-	
+	Template.link.gist = function() {
+		var re = new RegExp("^https?://gist.github.com/[a-z0-9.?&=]*");
+		return re.test(this.urltext);
+
+	}
+	Template.link.twitter = function() {
+		var re = new RegExp("^https?://(www.)?twitter.com/[a-z0-9]+/status/[0-9]+$");
+		return re.test(this.urltext);
+	}
+	Template.link.image = function() {
+		var re = new RegExp(".+\\.(jpg|png|gif|bmp)$","i");
+		return re.test(this.urltext);
+	}	
 	Template.link.dragtext = function() {
 		return this.urltext;	
 	}
@@ -73,6 +85,24 @@ if (Meteor.isClient) {
 
 		var uri = "<iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/" + video_id + "\" frameborder=\"0\"></iframe>";
 		document.getElementById(target).innerHTML = uri;
+	}
+	Template.ghlink.rendered = function() {
+		var tid = this.data._id;
+		var target = "gh_"+tid;
+		var url = "https://github.com/api/oembed?format=json&url="+this.data.urltext+"&callback=?";
+		var linkURL= this.data.urltext;
+		$.getJSON(url, null, function(data) {
+			document.getElementById(target).innerHTML="<span style=\"font-size:10px\">Snippet of <a href=\""+linkURL+"\">this gist</a></span>"
+			document.getElementById(target).innerHTML+=data.html;	
+		});
+		
+	}
+	Template.twlink.rendered = function() {
+		var tid = this.data._id;
+		var target = "tw_"+tid;
+		$.getJSON("https://api.twitter.com/1/statuses/oembed.json?url="+this.data.urltext+"&callback=?", null, function(data) {
+			document.getElementById(target).innerHTML = data.html;
+		});
 	}
 }
 

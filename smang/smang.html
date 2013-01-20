@@ -65,8 +65,24 @@
 					{{> ytlink}}
 				</div>
 			{{else}}
-				<a href="{{dragtext}}" target="_blank">{{dragtext}}</a>
-				<!--	<span class="owner"> Owner: {{user}}</span> -->	
+				{{#if gist}}
+					<div id="gh_{{id}}" style="max-width:300px">
+						{{> ghlink}}
+					</div>
+				{{else}}
+					{{#if twitter}}
+						<div id="tw_{{id}}">
+							{{> twlink}}
+						</div>
+					{{else}}
+						{{#if image}}
+							<img src={{dragtext}} />
+							{{else}}
+							<a href="{{dragtext}}" target="_blank">{{dragtext}}</a>
+							<!--	<span class="owner"> Owner: {{user}}</span> -->	
+						{{/if}}
+					{{/if}}
+				{{/if}}
 			{{/if}}
 		{{/if}}
 	</div>
@@ -74,3 +90,5 @@
 
 <template name="sclink"></template>
 <template name="ytlink"></template>
+<template name="ghlink"></template>
+<template name="twlink"></template>

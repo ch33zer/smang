@@ -45,9 +45,11 @@ a {
 	background: #fff;
 	border: 1px solid #bbb;
 	width: intrinsic;
+	width: -moz-max-content;
 	height: auto; 
 	padding: 0.5em;
-	border-radius: 2px; 
+	border-radius: 2px;
+	overflow: auto; 
 }
 
 .delete {
