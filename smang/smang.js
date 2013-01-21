@@ -14,19 +14,22 @@ if (Meteor.isClient) {
 		"click input.speak, keydown": function(event) {
 			if (event.type == 'click' || (event.type == 'keydown' && (event.which == 10 || event.which == 13))) {
 				var ownerName = new String(Meteor.user().emails[0].address);
-				Chats.insert({message: document.getElementById("chatentry").value, owner: ownerName});
+				Chats.insert({message: document.getElementById("chatentry").value, owner: ownerName, timestamp: (new Date().getTime())/1000});
 				document.getElementById("chatentry").value = "";
 			}
 		}
 	}
 	Template.chat.chats = function() {
-		return Chats.find();
+		return Chats.find({}, {sort: [["timestamp","desc"]], limit: 80});
 	}
 	Template.chatmessage.owner = function() {
 		return this.owner;
 	}
 	Template.chatmessage.message = function() {
 		return this.message;
+	}
+	Template.chatmessage.timestamp = function() {
+		return this.timestamp;
 	}
 	Template.link.events = {
 		"click .delete": function(event) {
@@ -35,20 +38,20 @@ if (Meteor.isClient) {
 	}
 	
 	Template.link.soundcloud = function() {
-		var re = new RegExp("^https?://([a-z0-9]*.)?soundcloud.com/([a-z0-9]/)*");
+		var re = new RegExp("^(https?://)?([a-z0-9]*.)?soundcloud.com/([a-z0-9A-Z]/)*");
 		return re.test(this.urltext);
 	}
 	Template.link.youtube = function() {
-		var re = new RegExp("^https?://(www.)?youtube.com/[a-z0-9.?&=]*");
+		var re = new RegExp("^(https?://)?(www.)?youtube.com/[a-z0-9.?&=]*");
 		return re.test(this.urltext);
 	}
 	Template.link.gist = function() {
-		var re = new RegExp("^https?://gist.github.com/[a-z0-9.?&=]*");
+		var re = new RegExp("^(https?://)?gist.github.com/[a-z0-9.?&=]*");
 		return re.test(this.urltext);
 
 	}
 	Template.link.twitter = function() {
-		var re = new RegExp("^https?://(www.)?twitter.com/[a-z0-9]+/status/[0-9]+$");
+		var re = new RegExp("^(https?://)?(www.)?twitter.com/[a-z0-9A-Z]+/status/[0-9]+$");
 		return re.test(this.urltext);
 	}
 	Template.link.image = function() {
@@ -143,8 +146,10 @@ if (Meteor.isServer) {
   });
   Meteor.startup(function () {
     if (Links.find().count() === 0) {
-      var urls = ["http://jhu.edu",
-                   "http://youtube.com"];
+      var urls = ["Welcome to Smang",
+                   "Enter whatever you like in the box above, then hit Smang",
+			"You can drag these boxes around at will",
+			"Create an account (upper left) to use chat"];
       for (var i = 0; i < urls.length; i++)
         Links.insert({urltext: urls[i], owner: null,x: Math.floor(Math.random()*10)*5, y: Math.floor(Math.random()*10)*5});
 
