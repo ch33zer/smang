@@ -1,5 +1,6 @@
 Links = new Meteor.Collection("links");
 Chats = new Meteor.Collection("chats");
+Channels = new Meteor.Collection("channels");
 
 if (Meteor.isClient) {
 	Template.input.events = {
@@ -14,22 +15,26 @@ if (Meteor.isClient) {
 		"click input.speak, keydown": function(event) {
 			if (event.type == 'click' || (event.type == 'keydown' && (event.which == 10 || event.which == 13))) {
 				var ownerName = new String(Meteor.user().emails[0].address);
-				Chats.insert({message: document.getElementById("chatentry").value, owner: ownerName, timestamp: (new Date().getTime())/1000});
+				Chats.insert({message: document.getElementById("chatentry").value, owner: ownerName, timestamp : new Date(), timestampms: (new Date().getTime())/1000});
 				document.getElementById("chatentry").value = "";
 			}
 		}
 	}
 	Template.chat.chats = function() {
-		return Chats.find({}, {sort: [["timestamp","desc"]], limit: 80});
+		return Chats.find({}, {sort: [["timestampms","desc"]], limit: 80});
 	}
 	Template.chatmessage.owner = function() {
 		return this.owner;
 	}
+	Template.chatmessage.timestamp = function() {
+		var tmp = this.timestamp;
+		return dateFormat(tmp, "shortTime");
+	}
 	Template.chatmessage.message = function() {
 		return this.message;
 	}
-	Template.chatmessage.timestamp = function() {
-		return this.timestamp;
+	Template.chatmessage.timestampms = function() {
+		return this.timestampms;
 	}
 	Template.link.events = {
 		"click .delete": function(event) {
